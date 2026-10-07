@@ -1,0 +1,240 @@
+/* src/components/FeaturedProducts.css */
+/* Grid of 4 product cards with hover effects and action buttons */
+
+.featured-section {
+  padding: 80px 24px;
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.featured-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.featured-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 50px;
+}
+
+.featured-eyebrow {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.featured-title {
+  font-family: var(--font-heading);
+  font-size: 40px;
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: 14px;
+}
+
+.featured-subtitle {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-muted);
+}
+
+/* 4-Column responsive product grid */
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+
+/* Individual product card */
+.product-card {
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.06);
+  border-color: #d1cbc0;
+}
+
+/* Soft colored placeholder image block */
+.product-placeholder {
+  position: relative;
+  height: 260px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.product-fabric-tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--color-muted);
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  font-weight: 500;
+}
+
+/* Wishlist circular button */
+.wishlist-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--color-muted);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  line-height: 1;
+}
+
+.wishlist-btn:hover {
+  background: #ffffff;
+  color: #b33939;
+  transform: scale(1.1);
+  border-color: #b33939;
+}
+
+.wishlist-btn.wishlist-active {
+  color: #b33939;
+  background: #ffffff;
+  border-color: #b33939;
+}
+
+/* Minimal decorative center motif for placeholder */
+.product-swatch-silhouette {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed rgba(26, 26, 26, 0.15);
+  transition: transform 0.35s ease;
+}
+
+.product-card:hover .product-swatch-silhouette {
+  transform: scale(1.08);
+}
+
+.silhouette-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(26, 26, 26, 0.4);
+  font-weight: 600;
+}
+
+/* Product Card Information */
+.product-details {
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.product-category {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.product-name {
+  font-family: var(--font-heading);
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.product-price {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 18px;
+}
+
+/* Add to Cart button */
+.cart-btn {
+  margin-top: auto;
+  width: 100%;
+  padding: 11px 16px;
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-text);
+  border-radius: 2px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cart-btn:hover {
+  background: var(--color-text);
+  color: #ffffff;
+}
+
+.cart-btn.cart-btn-added {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #ffffff;
+}
+
+/* Responsive grid adjustments */
+@media (max-width: 1024px) {
+  .featured-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 580px) {
+  .featured-section {
+    padding: 60px 18px;
+  }
+
+  .featured-title {
+    font-size: 32px;
+  }
+
+  .featured-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .product-placeholder {
+    height: 240px;
+  }
+}

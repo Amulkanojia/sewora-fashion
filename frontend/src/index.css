@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap');
+
+:root {
+  --color-bg: #faf8f5;
+  --color-text: #1a1a1a;
+  --color-muted: #6b6b6b;
+  --color-accent: #3d5a47;
+  --color-border: #e5e0d8;
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 24px;
+  text-align: center;
+}
+
+.brand {
+  font-family: var(--font-heading);
+  font-size: 56px;
+  letter-spacing: 12px;
+  font-weight: 500;
+}
+
+.tagline {
+  color: var(--color-muted);
+  margin: 16px 0 32px;
+}
+
+.btn {
+  padding: 14px 32px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin: 0 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: white;
+  border: 1px solid var(--color-accent);
+}
+
+.btn-primary:hover {
+  background: var(--color-text);
+  border-color: var(--color-text);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-text);
+}
+
+.btn-outline:hover {
+  background: var(--color-text);
+  color: white;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250, 248, 245, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-border);
+}
+
