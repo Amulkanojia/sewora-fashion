@@ -65,6 +65,28 @@
   border-color: #d1cbc0;
 }
 
+/* Card image wrapper and links */
+.product-card-image-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.product-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.product-name-link {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.25s ease;
+}
+
+.product-name-link:hover {
+  color: var(--color-accent);
+}
+
 /* Soft colored placeholder image block */
 .product-placeholder {
   position: relative;

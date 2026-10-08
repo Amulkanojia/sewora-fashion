@@ -1,6 +1,7 @@
 // src/components/FeaturedProducts.jsx
-// Grid of 4 curated fashion items with wishlist and cart actions
+// Grid of 4 curated fashion items with wishlist, cart actions, and detail links
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import products from '../data/products'
 import './FeaturedProducts.css'
 
@@ -50,16 +51,24 @@ function FeaturedProducts() {
 
             return (
               <div key={product.id} className="product-card">
-                {/* Soft colored placeholder block (no external images) */}
-                <div
-                  className="product-placeholder"
-                  style={{ backgroundColor: product.placeholderBg || '#ece6dd' }}
-                >
-                  <span className="product-fabric-tag">{product.fabric || product.color}</span>
+                {/* Image area with link to product details */}
+                <div className="product-card-image-wrap">
+                  <Link
+                    to={`/products/${product.id}`}
+                    className="product-card-link"
+                    aria-label={product.name}
+                  >
+                    <div
+                      className="product-placeholder"
+                      style={{ backgroundColor: product.placeholderBg || '#ece6dd' }}
+                    >
+                      <span className="product-fabric-tag">{product.fabric || product.color}</span>
 
-                  <div className="product-swatch-silhouette">
-                    <span className="silhouette-label">{product.category}</span>
-                  </div>
+                      <div className="product-swatch-silhouette">
+                        <span className="silhouette-label">{product.category}</span>
+                      </div>
+                    </div>
+                  </Link>
 
                   {/* Wishlist Button in top corner */}
                   <button
@@ -76,7 +85,11 @@ function FeaturedProducts() {
                 {/* Product Information */}
                 <div className="product-details">
                   <span className="product-category">{product.category}</span>
-                  <h3 className="product-name">{product.name}</h3>
+                  <h3 className="product-name">
+                    <Link to={`/products/${product.id}`} className="product-name-link">
+                      {product.name}
+                    </Link>
+                  </h3>
                   <div className="product-price">
                     ₹{product.price.toLocaleString('en-IN')}
                   </div>

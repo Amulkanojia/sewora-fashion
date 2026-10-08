@@ -1,6 +1,7 @@
 // src/pages/Products.jsx
 // Products catalog page with search, category filters, sorting, and responsive grid
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import products from '../data/products'
 import './Products.css'
 
@@ -154,18 +155,26 @@ function Products() {
 
               return (
                 <div key={product.id} className="product-card">
-                  {/* Soft colored placeholder block (replaces external images) */}
-                  <div
-                    className="product-placeholder"
-                    style={{ backgroundColor: product.placeholderBg || '#ece6dd' }}
-                  >
-                    <span className="product-fabric-tag">
-                      {product.fabric || product.color}
-                    </span>
+                  {/* Image area with link to product details */}
+                  <div className="product-card-image-wrap">
+                    <Link
+                      to={`/products/${product.id}`}
+                      className="product-card-link"
+                      aria-label={product.name}
+                    >
+                      <div
+                        className="product-placeholder"
+                        style={{ backgroundColor: product.placeholderBg || '#ece6dd' }}
+                      >
+                        <span className="product-fabric-tag">
+                          {product.fabric || product.color}
+                        </span>
 
-                    <div className="product-swatch-silhouette">
-                      <span className="silhouette-label">{product.category}</span>
-                    </div>
+                        <div className="product-swatch-silhouette">
+                          <span className="silhouette-label">{product.category}</span>
+                        </div>
+                      </div>
+                    </Link>
 
                     {/* Wishlist Button */}
                     <button
@@ -186,7 +195,11 @@ function Products() {
                       <span className="product-color">{product.color}</span>
                     </div>
 
-                    <h2 className="product-name">{product.name}</h2>
+                    <h2 className="product-name">
+                      <Link to={`/products/${product.id}`} className="product-name-link">
+                        {product.name}
+                      </Link>
+                    </h2>
                     <p className="product-description">{product.description}</p>
 
                     {/* Available Sizes */}

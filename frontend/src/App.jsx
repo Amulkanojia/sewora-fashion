@@ -9,6 +9,7 @@ import FeaturedProducts from './components/FeaturedProducts'
 import Sustainability from './components/Sustainability'
 import Footer from './components/Footer'
 import Products from './pages/Products'
+import ProductDetails from './pages/ProductDetails'
 
 // Homepage view grouping all existing homepage sections
 function Home() {
@@ -32,6 +33,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/products/:id" element={<ProductDetails />} />
       </Routes>
 
       {/* Footer appears on every page */}
