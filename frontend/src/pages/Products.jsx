@@ -3,17 +3,20 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import products from '../data/products'
+import { useCart } from '../context/CartContext'
 import './Products.css'
 
 const categories = ['All', 'Women', 'Men', 'Accessories']
 
 function Products() {
+  const { addToCart } = useCart()
+
   // Filter and sort state
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [sortBy, setSortBy] = useState('default')
 
-  // Wishlist and cart interactivity state
+  // Wishlist and cart feedback state
   const [wishlist, setWishlist] = useState([])
   const [addedItems, setAddedItems] = useState({})
 
@@ -26,11 +29,14 @@ function Products() {
     )
   }
 
-  // Handle Add to Cart with temporary visual confirmation
-  const handleAddToCart = (productId) => {
-    setAddedItems((prev) => ({ ...prev, [productId]: true }))
+  // Handle Add to Cart using first available size on catalog cards
+  const handleAddToCart = (product) => {
+    const defaultSize = product.sizes?.[0] || 'One Size'
+    addToCart(product, defaultSize, 1)
+
+    setAddedItems((prev) => ({ ...prev, [product.id]: true }))
     setTimeout(() => {
-      setAddedItems((prev) => ({ ...prev, [productId]: false }))
+      setAddedItems((prev) => ({ ...prev, [product.id]: false }))
     }, 1600)
   }
 
@@ -216,7 +222,7 @@ function Products() {
                     <button
                       type="button"
                       className={`cart-btn ${isAdded ? 'cart-btn-added' : ''}`}
-                      onClick={() => handleAddToCart(product.id)}
+                      onClick={() => handleAddToCart(product)}
                     >
                       {isAdded ? 'Added ✓' : 'Add to Cart'}
                     </button>

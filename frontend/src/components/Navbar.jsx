@@ -1,8 +1,11 @@
 // src/components/Navbar.jsx
-// Header navigation with React Router Link components
+// Header navigation with React Router Link components and live cart counter
 import { Link } from 'react-router-dom'
+import { useCart } from '../context/CartContext'
 
 function Navbar() {
+  const { cartCount } = useCart()
+
   return (
     <header className="navbar">
       <div className="navbar-inner">
@@ -16,7 +19,7 @@ function Navbar() {
 
         <div className="navbar-actions">
           <Link to="/wishlist">Wishlist</Link>
-          <Link to="/cart">Cart (0)</Link>
+          <Link to="/cart">Cart ({cartCount})</Link>
           <Link to="/login">Login</Link>
         </div>
       </div>

@@ -3,9 +3,12 @@
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import products from '../data/products'
+import { useCart } from '../context/CartContext'
 import './ProductDetails.css'
 
 function ProductView({ product }) {
+  const { addToCart } = useCart()
+
   // State for selected size and quantity
   const [selectedSize, setSelectedSize] = useState(product.sizes?.[0] || '')
   const [quantity, setQuantity] = useState(1)
@@ -23,8 +26,9 @@ function ProductView({ product }) {
     setQuantity((prev) => prev + 1)
   }
 
-  // Handle Add to Cart action
+  // Handle Add to Cart action using selected size and quantity
   const handleAddToCart = () => {
+    addToCart(product, selectedSize, quantity)
     setIsAdded(true)
     setTimeout(() => setIsAdded(false), 1800)
   }
@@ -120,7 +124,7 @@ function ProductView({ product }) {
                 >
                   &minus;
                 </button>
-                <span className="qty-value">{quantity}</span>
+                <span className="qty-number">{quantity}</span>
                 <button
                   type="button"
                   className="qty-btn"

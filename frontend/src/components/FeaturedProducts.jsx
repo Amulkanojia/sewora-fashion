@@ -3,9 +3,12 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import products from '../data/products'
+import { useCart } from '../context/CartContext'
 import './FeaturedProducts.css'
 
 function FeaturedProducts() {
+  const { addToCart } = useCart()
+
   // Use first 4 items from shared products data
   const featuredProducts = products.slice(0, 4)
 
@@ -23,11 +26,14 @@ function FeaturedProducts() {
     )
   }
 
-  // Handle Add to Cart with friendly temporary button feedback
-  const handleAddToCart = (productId) => {
-    setAddedItems((prev) => ({ ...prev, [productId]: true }))
+  // Handle Add to Cart using first available size on featured cards
+  const handleAddToCart = (product) => {
+    const defaultSize = product.sizes?.[0] || 'One Size'
+    addToCart(product, defaultSize, 1)
+
+    setAddedItems((prev) => ({ ...prev, [product.id]: true }))
     setTimeout(() => {
-      setAddedItems((prev) => ({ ...prev, [productId]: false }))
+      setAddedItems((prev) => ({ ...prev, [product.id]: false }))
     }, 1600)
   }
 
@@ -98,7 +104,7 @@ function FeaturedProducts() {
                   <button
                     type="button"
                     className={`cart-btn ${isAdded ? 'cart-btn-added' : ''}`}
-                    onClick={() => handleAddToCart(product.id)}
+                    onClick={() => handleAddToCart(product)}
                   >
                     {isAdded ? 'Added ✓' : 'Add to Cart'}
                   </button>
