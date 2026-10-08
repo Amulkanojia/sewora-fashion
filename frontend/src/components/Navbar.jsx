@@ -1,19 +1,23 @@
+// src/components/Navbar.jsx
+// Header navigation with React Router Link components
+import { Link } from 'react-router-dom'
+
 function Navbar() {
   return (
     <header className="navbar">
       <div className="navbar-inner">
-        <a href="/" className="navbar-logo">SEWORA</a>
+        <Link to="/" className="navbar-logo">SEWORA</Link>
 
         <nav className="navbar-links">
-          <a href="/">Home</a>
-          <a href="/products">Shop</a>
-          <a href="/about">About</a>
+          <Link to="/">Home</Link>
+          <Link to="/products">Shop</Link>
+          <Link to="/about">About</Link>
         </nav>
 
         <div className="navbar-actions">
-          <a href="/wishlist">Wishlist</a>
-          <a href="/cart">Cart (0)</a>
-          <a href="/login">Login</a>
+          <Link to="/wishlist">Wishlist</Link>
+          <Link to="/cart">Cart (0)</Link>
+          <Link to="/login">Login</Link>
         </div>
       </div>
     </header>

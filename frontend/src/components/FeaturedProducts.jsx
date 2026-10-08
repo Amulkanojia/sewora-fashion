@@ -1,45 +1,13 @@
 // src/components/FeaturedProducts.jsx
 // Grid of 4 curated fashion items with wishlist and cart actions
 import { useState } from 'react'
+import products from '../data/products'
 import './FeaturedProducts.css'
 
-// Hard-coded sample products (name, price in INR, category)
-const sampleProducts = [
-  {
-    id: 1,
-    name: 'Organic Linen Overshirt',
-    category: 'Men',
-    price: 4499,
-    fabric: '100% French Flax',
-    placeholderBg: '#ece6dd',
-  },
-  {
-    id: 2,
-    name: 'Peace Silk Slip Dress',
-    category: 'Women',
-    price: 5999,
-    fabric: 'Ahimsa Cruelty-Free Silk',
-    placeholderBg: '#e6ded4',
-  },
-  {
-    id: 3,
-    name: 'Structured Canvas Tote',
-    category: 'Accessories',
-    price: 2499,
-    fabric: 'Recycled Heavy Canvas',
-    placeholderBg: '#dfe6de',
-  },
-  {
-    id: 4,
-    name: 'Relaxed Hemp Trousers',
-    category: 'Women',
-    price: 3899,
-    fabric: 'Hemp & Organic Cotton',
-    placeholderBg: '#dedbd4',
-  },
-]
-
 function FeaturedProducts() {
+  // Use first 4 items from shared products data
+  const featuredProducts = products.slice(0, 4)
+
   // Simple state to track wishlisted item IDs
   const [wishlist, setWishlist] = useState([])
   // State to provide temporary "Added ✓" feedback when adding to cart
@@ -76,7 +44,7 @@ function FeaturedProducts() {
 
         {/* 4 Product Cards Grid */}
         <div className="featured-grid">
-          {sampleProducts.map((product) => {
+          {featuredProducts.map((product) => {
             const isWishlisted = wishlist.includes(product.id)
             const isAdded = addedItems[product.id]
 
@@ -85,9 +53,9 @@ function FeaturedProducts() {
                 {/* Soft colored placeholder block (no external images) */}
                 <div
                   className="product-placeholder"
-                  style={{ backgroundColor: product.placeholderBg }}
+                  style={{ backgroundColor: product.placeholderBg || '#ece6dd' }}
                 >
-                  <span className="product-fabric-tag">{product.fabric}</span>
+                  <span className="product-fabric-tag">{product.fabric || product.color}</span>
 
                   <div className="product-swatch-silhouette">
                     <span className="silhouette-label">{product.category}</span>

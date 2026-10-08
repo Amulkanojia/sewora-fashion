@@ -1,5 +1,6 @@
 // src/App.jsx
-// SEWORA - Sustainable Fashion Homepage
+// SEWORA - Sustainable Fashion Website
+import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import './components/Navbar.css'
 import Hero from './components/Hero'
@@ -7,26 +8,33 @@ import Categories from './components/Categories'
 import FeaturedProducts from './components/FeaturedProducts'
 import Sustainability from './components/Sustainability'
 import Footer from './components/Footer'
+import Products from './pages/Products'
+
+// Homepage view grouping all existing homepage sections
+function Home() {
+  return (
+    <>
+      <Hero />
+      <Categories />
+      <FeaturedProducts />
+      <Sustainability />
+    </>
+  )
+}
 
 function App() {
   return (
     <div className="app">
-      {/* 1. Navigation Bar */}
+      {/* Navbar appears on every page */}
       <Navbar />
 
-      {/* 2. Hero Section */}
-      <Hero />
+      {/* Main page routes */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/products" element={<Products />} />
+      </Routes>
 
-      {/* 3. Categories Section */}
-      <Categories />
-
-      {/* 4. Featured Products Section */}
-      <FeaturedProducts />
-
-      {/* 5. Sustainability (SDG 12) Section */}
-      <Sustainability />
-
-      {/* 6. Footer Section */}
+      {/* Footer appears on every page */}
       <Footer />
     </div>
   )
