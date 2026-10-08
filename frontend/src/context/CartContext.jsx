@@ -93,6 +93,16 @@ export function CartProvider({ children }) {
     )
   }
 
+  // Empty the cart and reset storage
+  const clearCart = () => {
+    setCartItems([])
+    try {
+      localStorage.removeItem(CART_STORAGE_KEY)
+    } catch (error) {
+      console.error('Error clearing cart from localStorage:', error)
+    }
+  }
+
   // Total count of all items in the cart
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0)
 
@@ -107,6 +117,7 @@ export function CartProvider({ children }) {
     addToCart,
     updateQuantity,
     removeFromCart,
+    clearCart,
     cartCount,
     cartTotal,
   }
