@@ -27,6 +27,7 @@
 .navbar-links,
 .navbar-actions {
   display: flex;
+  align-items: center;
   gap: 32px;
 }
 
@@ -41,4 +42,39 @@
 
 .navbar a:not(.navbar-logo):hover {
   color: var(--color-accent);
+}
+
+/* User Greeting & Logout button */
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navbar-user-greeting {
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.navbar-logout-btn {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.25s ease;
+}
+
+.navbar-logout-btn:hover {
+  background: var(--color-text);
+  color: #ffffff;
+  border-color: var(--color-text);
 }

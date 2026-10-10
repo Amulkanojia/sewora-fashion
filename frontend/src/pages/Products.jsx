@@ -28,8 +28,6 @@ function Products() {
   // Fetch products from backend on mount
   useEffect(() => {
     let isMounted = true
-    setLoading(true)
-    setError(null)
 
     getProducts()
       .then((data) => {

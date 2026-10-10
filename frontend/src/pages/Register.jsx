@@ -1,19 +1,24 @@
 // src/pages/Register.jsx
-// User registration page with form validation and link to login
+// User registration page with form validation, backend registration, and redirection
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import './Auth.css'
 
 function Register() {
+  const { register } = useAuth()
+  const navigate = useNavigate()
+
   // Form fields state
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  // Handle registration submission with validation
-  const handleSubmit = (event) => {
+  // Handle registration submission with validation and backend API call
+  const handleSubmit = async (event) => {
     event.preventDefault()
     setErrorMessage('')
 
@@ -35,9 +40,15 @@ function Register() {
       return
     }
 
-    // Form is valid: log values and prepare for backend integration
-    console.log('Register user details:', { name, email, password })
-    // TODO: connect to backend API
+    try {
+      setLoading(true)
+      await register(name, email, password)
+      navigate('/')
+    } catch (err) {
+      setErrorMessage(err.message || 'Something went wrong')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -53,7 +64,7 @@ function Register() {
             </p>
           </div>
 
-          {/* Validation Error Message */}
+          {/* Validation or Server Error Message */}
           {errorMessage && (
             <div className="auth-error-banner" role="alert">
               <span className="auth-error-icon">&bull;</span>
@@ -75,6 +86,7 @@ function Register() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 autoComplete="name"
+                disabled={loading}
               />
             </div>
 
@@ -90,6 +102,7 @@ function Register() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 autoComplete="email"
+                disabled={loading}
               />
             </div>
 
@@ -105,6 +118,7 @@ function Register() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="new-password"
+                disabled={loading}
               />
             </div>
 
@@ -120,11 +134,16 @@ function Register() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 autoComplete="new-password"
+                disabled={loading}
               />
             </div>
 
-            <button type="submit" className="btn btn-primary auth-submit-btn">
-              Create account
+            <button
+              type="submit"
+              className="btn btn-primary auth-submit-btn"
+              disabled={loading}
+            >
+              {loading ? 'Please wait...' : 'Create account'}
             </button>
           </form>
 

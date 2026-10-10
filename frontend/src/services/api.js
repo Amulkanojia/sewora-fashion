@@ -1,5 +1,5 @@
 // src/services/api.js
-// API service for fetching products from the backend
+// API service for fetching products and handling authentication with the backend
 
 export const API_BASE_URL = 'http://localhost:8080/api'
 
@@ -44,4 +44,44 @@ export async function getProductById(id) {
 
   const data = await response.json()
   return formatProduct(data)
+}
+
+// Register a new user account: POST /auth/register
+export async function registerUser(name, email, password) {
+  const response = await fetch(`${API_BASE_URL}/auth/register`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ name, email, password }),
+  })
+
+  const data = await response.json().catch(() => null)
+
+  if (!response.ok) {
+    const errorMessage = data?.message || 'Something went wrong'
+    throw new Error(errorMessage)
+  }
+
+  return data
+}
+
+// Login an existing user account: POST /auth/login
+export async function loginUser(email, password) {
+  const response = await fetch(`${API_BASE_URL}/auth/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, password }),
+  })
+
+  const data = await response.json().catch(() => null)
+
+  if (!response.ok) {
+    const errorMessage = data?.message || 'Something went wrong'
+    throw new Error(errorMessage)
+  }
+
+  return data
 }
