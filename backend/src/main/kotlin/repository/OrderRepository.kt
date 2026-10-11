@@ -62,7 +62,7 @@ class OrderRepository(private val firestore: Firestore) {
         "status" to order.status,
         "createdAt" to order.createdAt.toString(),
         "items" to order.items.mapIndexed { idx, it ->
-            if (it.id == null) it.id = (idx + 1).toLong()
+            if (it.id == null || it.id == 0L) it.id = (idx + 1).toLong()
             itemToMap(it)
         }
     )
@@ -71,8 +71,11 @@ class OrderRepository(private val firestore: Firestore) {
     private fun fromDocument(doc: DocumentSnapshot): Order {
         val rawItems = doc.get("items") as? List<Map<String, Any?>> ?: emptyList()
         val itemsList = rawItems.map { mapToItem(it) }
+        val numericId = doc.id.toLongOrNull()
+            ?: (doc.get("id") as? Number)?.toLong()
+            ?: (doc.get("id") as? String)?.toLongOrNull()
         return Order(
-            id = (doc.get("id") as? Number)?.toLong() ?: doc.id.toLongOrNull(),
+            id = numericId,
             userEmail = doc.getString("userEmail").orEmpty(),
             customerName = doc.getString("customerName").orEmpty(),
             phone = doc.getString("phone").orEmpty(),
@@ -91,7 +94,10 @@ class OrderRepository(private val firestore: Firestore) {
         val snapshot = collection.get().get()
         var maxId = 0L
         for (doc in snapshot.documents) {
-            val idVal = (doc.get("id") as? Number)?.toLong() ?: doc.id.toLongOrNull() ?: 0L
+            val idVal = doc.id.toLongOrNull()
+                ?: (doc.get("id") as? Number)?.toLong()
+                ?: (doc.get("id") as? String)?.toLongOrNull()
+                ?: 0L
             if (idVal > maxId) {
                 maxId = idVal
             }
@@ -119,16 +125,20 @@ class OrderRepository(private val firestore: Firestore) {
 
     fun findById(id: Long): Optional<Order> {
         val doc = collection.document(id.toString()).get().get()
-        return if (doc.exists()) {
-            Optional.of(fromDocument(doc))
-        } else {
-            Optional.empty()
+        if (doc.exists()) {
+            return Optional.of(fromDocument(doc))
         }
+        val query = collection.whereEqualTo("id", id).limit(1).get().get()
+        val found = query.documents.firstOrNull()
+        if (found != null && found.exists()) {
+            return Optional.of(fromDocument(found))
+        }
+        return Optional.empty()
     }
 
     @Synchronized
     fun save(order: Order): Order {
-        val id = order.id ?: getNextId()
+        val id = if (order.id == null || order.id == 0L) getNextId() else order.id!!
         order.id = id
         collection.document(id.toString()).set(toMap(order)).get()
         return order
@@ -139,9 +149,8 @@ class OrderRepository(private val firestore: Firestore) {
         var nextId = getNextId()
         val saved = mutableListOf<Order>()
         for (order in orders) {
-            if (order.id == null) {
-                order.id = nextId++
-            }
+            val id = if (order.id == null || order.id == 0L) nextId++ else order.id!!
+            order.id = id
             collection.document(order.id.toString()).set(toMap(order)).get()
             saved.add(order)
         }
@@ -154,7 +163,16 @@ class OrderRepository(private val firestore: Firestore) {
     }
 
     fun deleteById(id: Long) {
-        collection.document(id.toString()).delete().get()
+        val docRef = collection.document(id.toString())
+        val doc = docRef.get().get()
+        if (doc.exists()) {
+            docRef.delete().get()
+        } else {
+            val query = collection.whereEqualTo("id", id).get().get()
+            for (d in query.documents) {
+                d.reference.delete().get()
+            }
+        }
     }
 
     fun delete(order: Order) {
@@ -164,6 +182,8 @@ class OrderRepository(private val firestore: Firestore) {
 
     fun existsById(id: Long): Boolean {
         val doc = collection.document(id.toString()).get().get()
-        return doc.exists()
+        if (doc.exists()) return true
+        val query = collection.whereEqualTo("id", id).limit(1).get().get()
+        return !query.isEmpty
     }
 }

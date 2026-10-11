@@ -19,19 +19,27 @@ class UserRepository(private val firestore: Firestore) {
         "role" to user.role
     )
 
-    private fun fromDocument(doc: DocumentSnapshot): User = User(
-        id = (doc.get("id") as? Number)?.toLong() ?: doc.id.toLongOrNull(),
-        name = doc.getString("name").orEmpty(),
-        email = doc.getString("email").orEmpty(),
-        password = doc.getString("password").orEmpty(),
-        role = doc.getString("role") ?: "USER"
-    )
+    private fun fromDocument(doc: DocumentSnapshot): User {
+        val numericId = doc.id.toLongOrNull()
+            ?: (doc.get("id") as? Number)?.toLong()
+            ?: (doc.get("id") as? String)?.toLongOrNull()
+        return User(
+            id = numericId,
+            name = doc.getString("name").orEmpty(),
+            email = doc.getString("email").orEmpty(),
+            password = doc.getString("password").orEmpty(),
+            role = doc.getString("role") ?: "USER"
+        )
+    }
 
     private fun getNextId(): Long {
         val snapshot = collection.get().get()
         var maxId = 0L
         for (doc in snapshot.documents) {
-            val idVal = (doc.get("id") as? Number)?.toLong() ?: doc.id.toLongOrNull() ?: 0L
+            val idVal = doc.id.toLongOrNull()
+                ?: (doc.get("id") as? Number)?.toLong()
+                ?: (doc.get("id") as? String)?.toLongOrNull()
+                ?: 0L
             if (idVal > maxId) {
                 maxId = idVal
             }
@@ -47,11 +55,15 @@ class UserRepository(private val firestore: Firestore) {
 
     fun findById(id: Long): Optional<User> {
         val doc = collection.document(id.toString()).get().get()
-        return if (doc.exists()) {
-            Optional.of(fromDocument(doc))
-        } else {
-            Optional.empty()
+        if (doc.exists()) {
+            return Optional.of(fromDocument(doc))
         }
+        val query = collection.whereEqualTo("id", id).limit(1).get().get()
+        val found = query.documents.firstOrNull()
+        if (found != null && found.exists()) {
+            return Optional.of(fromDocument(found))
+        }
+        return Optional.empty()
     }
 
     fun findAll(): List<User> {
@@ -64,7 +76,7 @@ class UserRepository(private val firestore: Firestore) {
 
     @Synchronized
     fun save(user: User): User {
-        val id = user.id ?: getNextId()
+        val id = if (user.id == null || user.id == 0L) getNextId() else user.id!!
         user.id = id
         collection.document(id.toString()).set(toMap(user)).get()
         return user
@@ -75,9 +87,8 @@ class UserRepository(private val firestore: Firestore) {
         var nextId = getNextId()
         val saved = mutableListOf<User>()
         for (user in users) {
-            if (user.id == null) {
-                user.id = nextId++
-            }
+            val id = if (user.id == null || user.id == 0L) nextId++ else user.id!!
+            user.id = id
             collection.document(user.id.toString()).set(toMap(user)).get()
             saved.add(user)
         }
@@ -90,7 +101,16 @@ class UserRepository(private val firestore: Firestore) {
     }
 
     fun deleteById(id: Long) {
-        collection.document(id.toString()).delete().get()
+        val docRef = collection.document(id.toString())
+        val doc = docRef.get().get()
+        if (doc.exists()) {
+            docRef.delete().get()
+        } else {
+            val query = collection.whereEqualTo("id", id).get().get()
+            for (d in query.documents) {
+                d.reference.delete().get()
+            }
+        }
     }
 
     fun delete(user: User) {
@@ -100,6 +120,8 @@ class UserRepository(private val firestore: Firestore) {
 
     fun existsById(id: Long): Boolean {
         val doc = collection.document(id.toString()).get().get()
-        return doc.exists()
+        if (doc.exists()) return true
+        val query = collection.whereEqualTo("id", id).limit(1).get().get()
+        return !query.isEmpty
     }
 }

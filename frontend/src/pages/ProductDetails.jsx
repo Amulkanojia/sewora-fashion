@@ -1,8 +1,8 @@
 // src/pages/ProductDetails.jsx
 // Detailed product view with size selector, quantity counter, and cart/wishlist actions
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import products from '../data/products'
+import { getProductById } from '../services/api'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
 import { useToast } from '../context/ToastContext'
@@ -187,12 +187,65 @@ function ProductView({ product }) {
 function ProductDetails() {
   // Read product id from URL parameter
   const { id } = useParams()
+  const [product, setProduct] = useState(null)
+  const [status, setStatus] = useState('loading') // loading, ready, notfound, error
 
-  // Find product by id from the shared data array
-  const product = products.find((item) => String(item.id) === String(id))
+  // Load this product from the backend API
+  useEffect(() => {
+    let cancelled = false
+    setStatus('loading')
+    getProductById(id)
+      .then((data) => {
+        if (cancelled) return
+        if (!data) {
+          setStatus('notfound')
+          return
+        }
+        // Make sure sizes is an array, even if the API sends "S,M,L" as text
+        const sizes = Array.isArray(data.sizes)
+          ? data.sizes
+          : String(data.sizes || '').split(',').map((s) => s.trim()).filter(Boolean)
+        setProduct({ ...data, sizes })
+        setStatus('ready')
+      })
+      .catch(() => {
+        if (!cancelled) setStatus('error')
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [id])
+
+  if (status === 'loading') {
+    return (
+      <div className="product-not-found-page">
+        <div className="not-found-card">
+          <p className="not-found-eyebrow">SEWORA Archive</p>
+          <p className="not-found-text">Loading product...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (status === 'error') {
+    return (
+      <div className="product-not-found-page">
+        <div className="not-found-card">
+          <p className="not-found-eyebrow">SEWORA Archive</p>
+          <h1 className="not-found-title">Could not load product</h1>
+          <p className="not-found-text">
+            Could not load this product. Is the backend running?
+          </p>
+          <Link to="/products" className="btn btn-primary not-found-link">
+            &larr; Back to all products
+          </Link>
+        </div>
+      </div>
+    )
+  }
 
   // Handle product not found state
-  if (!product) {
+  if (status === 'notfound' || !product) {
     return (
       <div className="product-not-found-page">
         <div className="not-found-card">
