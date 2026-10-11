@@ -5,11 +5,13 @@ import { Link } from 'react-router-dom'
 import products from '../data/products'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
+import { useToast } from '../context/ToastContext'
 import './FeaturedProducts.css'
 
 function FeaturedProducts() {
   const { addToCart } = useCart()
   const { toggleWishlist, isInWishlist } = useWishlist()
+  const { showToast } = useToast()
 
   // Display only the first 4 products as New Arrivals
   const newArrivals = products.slice(0, 4)
@@ -20,6 +22,7 @@ function FeaturedProducts() {
   const handleAddToCart = (product) => {
     const defaultSize = product.sizes?.[0] || 'One Size'
     addToCart(product, defaultSize, 1)
+    showToast('Added to cart')
 
     setAddedItems((prev) => ({ ...prev, [product.id]: true }))
     setTimeout(() => {
@@ -82,7 +85,11 @@ function FeaturedProducts() {
                   <button
                     type="button"
                     className={`streetwear-wishlist-btn ${isWishlisted ? 'active' : ''}`}
-                    onClick={() => toggleWishlist(product.id)}
+                    onClick={() => {
+                      const isSaved = isWishlisted
+                      toggleWishlist(product.id)
+                      showToast(isSaved ? 'Removed from wishlist' : 'Saved to wishlist')
+                    }}
                     aria-pressed={isWishlisted}
                     aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
                     title={isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}

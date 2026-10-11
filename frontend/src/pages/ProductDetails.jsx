@@ -5,11 +5,13 @@ import { useParams, Link } from 'react-router-dom'
 import products from '../data/products'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
+import { useToast } from '../context/ToastContext'
 import './ProductDetails.css'
 
 function ProductView({ product }) {
   const { addToCart } = useCart()
   const { toggleWishlist, isInWishlist } = useWishlist()
+  const { showToast } = useToast()
 
   // State for selected size and quantity
   const [selectedSize, setSelectedSize] = useState(product.sizes?.[0] || '')
@@ -31,6 +33,7 @@ function ProductView({ product }) {
   // Handle Add to Cart action using selected size and quantity
   const handleAddToCart = () => {
     addToCart(product, selectedSize, quantity)
+    showToast('Added to cart')
     setIsAdded(true)
     setTimeout(() => setIsAdded(false), 1800)
   }
@@ -147,7 +150,11 @@ function ProductView({ product }) {
                 className={`btn btn-outline wishlist-action-btn ${
                   isWishlisted ? 'wishlist-active' : ''
                 }`}
-                onClick={() => toggleWishlist(product.id)}
+                onClick={() => {
+                  const isSaved = isWishlisted
+                  toggleWishlist(product.id)
+                  showToast(isSaved ? 'Removed from wishlist' : 'Saved to wishlist')
+                }}
                 aria-pressed={isWishlisted}
                 aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
               >

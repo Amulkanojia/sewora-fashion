@@ -1,0 +1,78 @@
+/* src/pages/NotFound.css */
+/* Streetwear editorial styles for 404 Not Found page */
+
+.notfound-page {
+  padding: 80px 24px 120px;
+  background-color: var(--color-bg, #F4F1EB);
+  min-height: calc(100vh - 220px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notfound-container {
+  width: 100%;
+  max-width: 620px;
+  text-align: center;
+}
+
+.notfound-card {
+  background: #ffffff;
+  border: 2px solid var(--color-dark, #111111);
+  padding: 64px 40px;
+}
+
+.notfound-code {
+  font-family: var(--font-heading);
+  font-size: 110px;
+  font-weight: 400;
+  line-height: 0.95;
+  color: var(--color-dark, #111111);
+  letter-spacing: -4px;
+  margin-bottom: 20px;
+  user-select: none;
+}
+
+.notfound-eyebrow {
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--color-dark, #111111);
+  background: var(--color-accent, #B8FF3B);
+  display: inline-block;
+  padding: 4px 10px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.notfound-message {
+  font-size: 15px;
+  color: var(--color-muted, #A5A5A0);
+  line-height: 1.6;
+  max-width: 440px;
+  margin: 0 auto 32px;
+}
+
+.notfound-btn {
+  padding: 16px 36px;
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 600px) {
+  .notfound-page {
+    padding: 40px 16px 80px;
+  }
+
+  .notfound-card {
+    padding: 44px 20px;
+  }
+
+  .notfound-code {
+    font-size: 76px;
+  }
+
+  .notfound-btn {
+    width: 100%;
+  }
+}

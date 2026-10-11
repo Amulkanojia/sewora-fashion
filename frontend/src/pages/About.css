@@ -1,0 +1,257 @@
+/* src/pages/About.css */
+/* Streetwear editorial styling for SEWORA About page */
+
+.about-page {
+  padding: 60px 24px 100px;
+  background-color: var(--color-bg, #F4F1EB);
+  min-height: calc(100vh - 200px);
+}
+
+.about-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Header / Hero */
+.about-header {
+  margin-bottom: 48px;
+  text-align: left;
+}
+
+.about-eyebrow {
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--color-dark, #111111);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.about-title {
+  font-family: var(--font-heading);
+  font-size: 42px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--color-dark, #111111);
+  letter-spacing: -1px;
+  line-height: 1.05;
+  margin-bottom: 16px;
+  max-width: 800px;
+}
+
+.about-subtitle {
+  font-size: 16px;
+  color: var(--color-muted, #A5A5A0);
+  line-height: 1.6;
+  max-width: 720px;
+}
+
+/* Brand Story Card */
+.about-story-section {
+  background: #ffffff;
+  border: 2px solid var(--color-dark, #111111);
+  padding: 44px 40px;
+  margin-bottom: 40px;
+}
+
+.about-section-label {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  text-transform: uppercase;
+  color: var(--color-dark, #111111);
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--color-dark, #111111);
+}
+
+.about-story-paragraphs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-dark, #111111);
+}
+
+/* Stats / Numbers Row */
+.about-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.about-stat-card {
+  background: var(--color-dark, #111111);
+  color: var(--color-ivory, #F4F1EB);
+  border: 2px solid var(--color-dark, #111111);
+  padding: 32px 24px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.stat-number {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  color: var(--color-accent, #B8FF3B);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  line-height: 1.1;
+}
+
+.stat-label {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-ivory, #F4F1EB);
+  line-height: 1.4;
+}
+
+/* Sustainability Pillars Section */
+.about-pillars-section {
+  margin-bottom: 48px;
+}
+
+.about-pillars-header {
+  margin-bottom: 24px;
+}
+
+.about-pillars-title {
+  font-family: var(--font-heading);
+  font-size: 26px;
+  text-transform: uppercase;
+  color: var(--color-dark, #111111);
+  margin-bottom: 8px;
+}
+
+.about-pillars-tagline {
+  font-size: 14px;
+  color: var(--color-muted, #A5A5A0);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.about-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.pillar-card {
+  background: #ffffff;
+  border: 2px solid var(--color-dark, #111111);
+  padding: 32px 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pillar-header {
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.15);
+}
+
+.pillar-sdg-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-dark, #111111);
+  background: var(--color-accent, #B8FF3B);
+  display: inline-block;
+  padding: 3px 8px;
+  margin-bottom: 12px;
+}
+
+.pillar-title {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  text-transform: uppercase;
+  color: var(--color-dark, #111111);
+  line-height: 1.25;
+}
+
+.pillar-description {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--color-dark, #111111);
+}
+
+/* Call to Action Section */
+.about-cta-section {
+  background: #ffffff;
+  border: 2px solid var(--color-dark, #111111);
+  padding: 50px 36px;
+  text-align: center;
+}
+
+.about-cta-title {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  text-transform: uppercase;
+  color: var(--color-dark, #111111);
+  margin-bottom: 12px;
+}
+
+.about-cta-text {
+  font-size: 15px;
+  color: var(--color-muted, #A5A5A0);
+  max-width: 540px;
+  margin: 0 auto 28px;
+  line-height: 1.6;
+}
+
+.about-cta-btn {
+  padding: 16px 36px;
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 860px) {
+  .about-story-paragraphs {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .about-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .about-pillars-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .about-title {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-page {
+    padding: 36px 16px 70px;
+  }
+
+  .about-story-section,
+  .about-cta-section {
+    padding: 28px 20px;
+  }
+
+  .about-title {
+    font-size: 26px;
+  }
+
+  .about-cta-btn {
+    width: 100%;
+  }
+}

@@ -4,12 +4,14 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
+import { useToast } from '../context/ToastContext'
 import { createOrder } from '../services/api'
 import './Checkout.css'
 
 function Checkout() {
   const { cartItems, cartTotal, clearCart } = useCart()
   const { user } = useAuth()
+  const { showToast } = useToast()
 
   // Form field states
   const [fullName, setFullName] = useState(user?.name || '')
@@ -141,6 +143,7 @@ function Checkout() {
       clearCart()
       setConfirmedOrderNumber(savedOrder.id)
       setConfirmedTotal(savedOrder.totalAmount || cartTotal)
+      showToast('Order placed')
       setOrderPlaced(true)
     } catch (err) {
       setErrorMessage(err.message || 'Failed to place order. Please try again.')

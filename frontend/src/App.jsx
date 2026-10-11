@@ -1,6 +1,7 @@
 // src/App.jsx
 // SEWORA - Sustainable Fashion Website
 import { Routes, Route } from 'react-router-dom'
+import AnnouncementBar from './components/AnnouncementBar'
 import Navbar from './components/Navbar'
 import './components/Navbar.css'
 import Hero from './components/Hero'
@@ -17,6 +18,8 @@ import Register from './pages/Register'
 import MyOrders from './pages/MyOrders'
 import OrderDetails from './pages/OrderDetails'
 import Wishlist from './pages/Wishlist'
+import About from './pages/About'
+import NotFound from './pages/NotFound'
 
 // Homepage view grouping all existing homepage sections
 function Home() {
@@ -33,6 +36,9 @@ function Home() {
 function App() {
   return (
     <div className="app">
+      {/* Announcement bar appears on every page above the Navbar */}
+      <AnnouncementBar />
+
       {/* Navbar appears on every page */}
       <Navbar />
 
@@ -48,6 +54,8 @@ function App() {
         <Route path="/orders/:id" element={<OrderDetails />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/about" element={<About />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       {/* Footer appears on every page */}

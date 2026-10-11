@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { getProducts } from '../services/api'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
+import { useToast } from '../context/ToastContext'
 import './Products.css'
 
 const categories = ['All', 'Women', 'Men', 'Accessories']
@@ -12,6 +13,7 @@ const categories = ['All', 'Women', 'Men', 'Accessories']
 function Products() {
   const { addToCart } = useCart()
   const { toggleWishlist, isInWishlist } = useWishlist()
+  const { showToast } = useToast()
 
   // Products from API state
   const [products, setProducts] = useState([])
@@ -53,6 +55,7 @@ function Products() {
   const handleAddToCart = (product) => {
     const defaultSize = product.sizes?.[0] || 'One Size'
     addToCart(product, defaultSize, 1)
+    showToast('Added to cart')
 
     setAddedItems((prev) => ({ ...prev, [product.id]: true }))
     setTimeout(() => {
@@ -225,7 +228,11 @@ function Products() {
                         <button
                           type="button"
                           className={`wishlist-btn ${isWishlisted ? 'wishlist-active' : ''}`}
-                          onClick={() => toggleWishlist(product.id)}
+                          onClick={() => {
+                            const isSaved = isWishlisted
+                            toggleWishlist(product.id)
+                            showToast(isSaved ? 'Removed from wishlist' : 'Saved to wishlist')
+                          }}
                           aria-pressed={isWishlisted}
                           aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
                           title={isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}

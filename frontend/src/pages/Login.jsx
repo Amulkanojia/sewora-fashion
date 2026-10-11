@@ -3,10 +3,12 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useToast } from '../context/ToastContext'
 import './Auth.css'
 
 function Login() {
   const { login } = useAuth()
+  const { showToast } = useToast()
   const navigate = useNavigate()
 
   // Form fields state
@@ -34,7 +36,8 @@ function Login() {
 
     try {
       setLoading(true)
-      await login(email, password)
+      const data = await login(email, password)
+      showToast(`Welcome back, ${data?.name || 'User'}`)
       navigate('/')
     } catch (err) {
       setErrorMessage(err.message || 'Something went wrong')

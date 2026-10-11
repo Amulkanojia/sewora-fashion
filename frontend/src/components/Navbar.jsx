@@ -5,12 +5,14 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
 import { useWishlist } from '../context/WishlistContext'
+import { useToast } from '../context/ToastContext'
 import './Navbar.css'
 
 function Navbar() {
   const { cartCount } = useCart()
   const { wishlistCount } = useWishlist()
   const { user, logout } = useAuth()
+  const { showToast } = useToast()
   const navigate = useNavigate()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
@@ -20,6 +22,7 @@ function Navbar() {
   // Handle logout and redirect to home
   const handleLogout = () => {
     logout()
+    showToast('Logged out')
     setMobileMenuOpen(false)
     navigate('/')
   }
@@ -40,7 +43,7 @@ function Navbar() {
         <nav className="navbar-links" aria-label="Main Navigation">
           <Link to="/" className="navbar-link">Home</Link>
           <Link to="/products" className="navbar-link">Shop</Link>
-          <a href="#campaign" className="navbar-link">About</a>
+          <Link to="/about" className="navbar-link">About</Link>
         </nav>
 
         {/* Desktop Right Actions */}
@@ -94,7 +97,7 @@ function Navbar() {
           <nav className="navbar-mobile-links">
             <Link to="/" className="mobile-link" onClick={closeMenu}>Home</Link>
             <Link to="/products" className="mobile-link" onClick={closeMenu}>Shop</Link>
-            <a href="#campaign" className="mobile-link" onClick={closeMenu}>About</a>
+            <Link to="/about" className="mobile-link" onClick={closeMenu}>About</Link>
             <Link to="/wishlist" className="mobile-link" onClick={closeMenu}>
               Wishlist ({wishlistCount})
             </Link>

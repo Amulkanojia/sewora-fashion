@@ -1,0 +1,64 @@
+/* src/components/AnnouncementBar.css */
+/* Streetwear editorial announcement strip */
+
+.announcement-bar {
+  background-color: var(--color-dark, #111111);
+  color: var(--color-accent, #B8FF3B);
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  border-bottom: 1px solid rgba(184, 255, 59, 0.2);
+  height: 36px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1001;
+}
+
+.announcement-track {
+  display: inline-flex;
+  width: max-content;
+  animation: announcement-marquee 24s linear infinite;
+  will-change: transform;
+}
+
+.announcement-track:hover {
+  animation-play-state: paused;
+}
+
+.announcement-content {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 0 16px;
+  display: inline-block;
+}
+
+@keyframes announcement-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Reduced motion accessibility: disable animation, center static text */
+@media (prefers-reduced-motion: reduce) {
+  .announcement-bar {
+    justify-content: center;
+  }
+
+  .announcement-track {
+    animation: none !important;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .announcement-content[aria-hidden="true"] {
+    display: none;
+  }
+}

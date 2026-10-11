@@ -5,11 +5,13 @@ import { Link } from 'react-router-dom'
 import { getProducts } from '../services/api'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
+import { useToast } from '../context/ToastContext'
 import './Wishlist.css'
 
 function Wishlist() {
   const { addToCart } = useCart()
   const { wishlistIds, removeFromWishlist } = useWishlist()
+  const { showToast } = useToast()
 
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -47,6 +49,7 @@ function Wishlist() {
   const handleMoveToCart = (product) => {
     const defaultSize = product.sizes?.[0] || 'One Size'
     addToCart(product, defaultSize, 1)
+    showToast('Added to cart')
     removeFromWishlist(product.id)
   }
 
