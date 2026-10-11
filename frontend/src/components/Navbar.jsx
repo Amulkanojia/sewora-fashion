@@ -4,10 +4,12 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
+import { useWishlist } from '../context/WishlistContext'
 import './Navbar.css'
 
 function Navbar() {
   const { cartCount } = useCart()
+  const { wishlistCount } = useWishlist()
   const { user, logout } = useAuth()
   const navigate = useNavigate()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -43,7 +45,9 @@ function Navbar() {
 
         {/* Desktop Right Actions */}
         <div className="navbar-actions">
-          <Link to="/products" className="navbar-link">Wishlist</Link>
+          <Link to="/wishlist" className="navbar-link">
+            Wishlist ({wishlistCount})
+          </Link>
           {user && (
             <Link to="/orders" className="navbar-link">
               Orders
@@ -91,7 +95,9 @@ function Navbar() {
             <Link to="/" className="mobile-link" onClick={closeMenu}>Home</Link>
             <Link to="/products" className="mobile-link" onClick={closeMenu}>Shop</Link>
             <a href="#campaign" className="mobile-link" onClick={closeMenu}>About</a>
-            <Link to="/products" className="mobile-link" onClick={closeMenu}>Wishlist</Link>
+            <Link to="/wishlist" className="mobile-link" onClick={closeMenu}>
+              Wishlist ({wishlistCount})
+            </Link>
             {user && (
               <Link to="/orders" className="mobile-link" onClick={closeMenu}>
                 Orders

@@ -16,6 +16,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import MyOrders from './pages/MyOrders'
 import OrderDetails from './pages/OrderDetails'
+import Wishlist from './pages/Wishlist'
 
 // Homepage view grouping all existing homepage sections
 function Home() {
@@ -41,6 +42,7 @@ function App() {
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetails />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/orders" element={<MyOrders />} />
         <Route path="/orders/:id" element={<OrderDetails />} />

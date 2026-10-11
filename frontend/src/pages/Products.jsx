@@ -4,12 +4,14 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { getProducts } from '../services/api'
 import { useCart } from '../context/CartContext'
+import { useWishlist } from '../context/WishlistContext'
 import './Products.css'
 
 const categories = ['All', 'Women', 'Men', 'Accessories']
 
 function Products() {
   const { addToCart } = useCart()
+  const { toggleWishlist, isInWishlist } = useWishlist()
 
   // Products from API state
   const [products, setProducts] = useState([])
@@ -21,8 +23,7 @@ function Products() {
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [sortBy, setSortBy] = useState('default')
 
-  // Wishlist and cart feedback state
-  const [wishlist, setWishlist] = useState([])
+  // Cart feedback state
   const [addedItems, setAddedItems] = useState({})
 
   // Fetch products from backend on mount
@@ -47,15 +48,6 @@ function Products() {
       isMounted = false
     }
   }, [])
-
-  // Toggle wishlist for a given product
-  const toggleWishlist = (productId) => {
-    setWishlist((prev) =>
-      prev.includes(productId)
-        ? prev.filter((id) => id !== productId)
-        : [...prev, productId]
-    )
-  }
 
   // Handle Add to Cart using first available size on catalog cards
   const handleAddToCart = (product) => {
@@ -203,7 +195,7 @@ function Products() {
             {sortedProducts.length > 0 ? (
               <div className="products-grid">
                 {sortedProducts.map((product) => {
-                  const isWishlisted = wishlist.includes(product.id)
+                  const isWishlisted = isInWishlist(product.id)
                   const isAdded = addedItems[product.id]
 
                   return (
@@ -234,7 +226,8 @@ function Products() {
                           type="button"
                           className={`wishlist-btn ${isWishlisted ? 'wishlist-active' : ''}`}
                           onClick={() => toggleWishlist(product.id)}
-                          aria-label={`Wishlist ${product.name}`}
+                          aria-pressed={isWishlisted}
+                          aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
                           title={isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
                         >
                           {isWishlisted ? '♥' : '♡'}

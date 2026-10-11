@@ -4,18 +4,20 @@ import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import products from '../data/products'
 import { useCart } from '../context/CartContext'
+import { useWishlist } from '../context/WishlistContext'
 import './ProductDetails.css'
 
 function ProductView({ product }) {
   const { addToCart } = useCart()
+  const { toggleWishlist, isInWishlist } = useWishlist()
 
   // State for selected size and quantity
   const [selectedSize, setSelectedSize] = useState(product.sizes?.[0] || '')
   const [quantity, setQuantity] = useState(1)
 
-  // Feedback states for cart and wishlist
+  // Feedback state for cart
   const [isAdded, setIsAdded] = useState(false)
-  const [isWishlisted, setIsWishlisted] = useState(false)
+  const isWishlisted = isInWishlist(product.id)
 
   // Handle quantity changes (minimum 1)
   const handleDecreaseQuantity = () => {
@@ -31,11 +33,6 @@ function ProductView({ product }) {
     addToCart(product, selectedSize, quantity)
     setIsAdded(true)
     setTimeout(() => setIsAdded(false), 1800)
-  }
-
-  // Handle Wishlist toggle action
-  const handleToggleWishlist = () => {
-    setIsWishlisted((prev) => !prev)
   }
 
   return (
@@ -150,7 +147,9 @@ function ProductView({ product }) {
                 className={`btn btn-outline wishlist-action-btn ${
                   isWishlisted ? 'wishlist-active' : ''
                 }`}
-                onClick={handleToggleWishlist}
+                onClick={() => toggleWishlist(product.id)}
+                aria-pressed={isWishlisted}
+                aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
               >
                 {isWishlisted ? '♥ In Wishlist' : '♡ Wishlist'}
               </button>

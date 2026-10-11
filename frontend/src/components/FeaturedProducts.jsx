@@ -4,26 +4,18 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import products from '../data/products'
 import { useCart } from '../context/CartContext'
+import { useWishlist } from '../context/WishlistContext'
 import './FeaturedProducts.css'
 
 function FeaturedProducts() {
   const { addToCart } = useCart()
+  const { toggleWishlist, isInWishlist } = useWishlist()
 
   // Display only the first 4 products as New Arrivals
   const newArrivals = products.slice(0, 4)
 
-  // Track wishlist state
-  const [wishlist, setWishlist] = useState([])
   // Cart addition feedback
   const [addedItems, setAddedItems] = useState({})
-
-  const toggleWishlist = (productId) => {
-    setWishlist((prev) =>
-      prev.includes(productId)
-        ? prev.filter((id) => id !== productId)
-        : [...prev, productId]
-    )
-  }
 
   const handleAddToCart = (product) => {
     const defaultSize = product.sizes?.[0] || 'One Size'
@@ -55,7 +47,7 @@ function FeaturedProducts() {
         {/* 4-Item Streetwear Product Grid */}
         <div className="arrivals-grid">
           {newArrivals.map((product) => {
-            const isWishlisted = wishlist.includes(product.id)
+            const isWishlisted = isInWishlist(product.id)
             const isAdded = addedItems[product.id]
 
             return (
@@ -91,10 +83,11 @@ function FeaturedProducts() {
                     type="button"
                     className={`streetwear-wishlist-btn ${isWishlisted ? 'active' : ''}`}
                     onClick={() => toggleWishlist(product.id)}
-                    aria-label={`Wishlist ${product.name}`}
+                    aria-pressed={isWishlisted}
+                    aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
                     title={isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
                   >
-                    {isWishlisted ? '★' : '☆'}
+                    {isWishlisted ? '♥' : '♡'}
                   </button>
                 </div>
 
