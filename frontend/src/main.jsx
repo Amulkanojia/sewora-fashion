@@ -5,6 +5,7 @@ import { AuthProvider } from './context/AuthContext'
 import { CartProvider } from './context/CartContext'
 import './index.css'
 import App from './App.jsx'
+import './streetwear.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

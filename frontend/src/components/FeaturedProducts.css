@@ -1,262 +1,300 @@
 /* src/components/FeaturedProducts.css */
-/* Grid of 4 product cards with hover effects and action buttons */
+/* New Arrivals 4-card streetwear product grid */
 
-.featured-section {
-  padding: 80px 24px;
-  background-color: var(--color-bg);
-  border-bottom: 1px solid var(--color-border);
+.arrivals-section {
+  padding: 90px 32px 80px;
+  background-color: var(--color-ivory, #F4F1EB);
+  border-bottom: 2px solid var(--color-dark, #111111);
 }
 
-.featured-container {
-  max-width: 1200px;
+.arrivals-container {
+  max-width: 1400px;
   margin: 0 auto;
 }
 
-.featured-header {
-  text-align: center;
-  max-width: 640px;
-  margin: 0 auto 50px;
+.arrivals-header {
+  margin-bottom: 48px;
 }
 
-.featured-eyebrow {
-  font-size: 12px;
-  letter-spacing: 3px;
+.arrivals-eyebrow-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.arrivals-eyebrow-text {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--color-muted, #A5A5A0);
   text-transform: uppercase;
-  color: var(--color-accent);
-  font-weight: 600;
-  margin-bottom: 12px;
 }
 
-.featured-title {
+.arrivals-title-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.arrivals-title {
   font-family: var(--font-heading);
-  font-size: 40px;
-  font-weight: 500;
-  color: var(--color-text);
-  margin-bottom: 14px;
+  font-size: clamp(36px, 4.2vw, 56px);
+  line-height: 1;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  color: var(--color-dark, #111111);
 }
 
-.featured-subtitle {
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--color-muted);
+.arrivals-view-all {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-dark, #111111);
+  text-decoration: none;
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--color-dark, #111111);
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-/* 4-Column responsive product grid */
-.featured-grid {
+.arrivals-view-all:hover {
+  color: var(--color-dark, #111111);
+  border-bottom-color: var(--color-accent, #B8FF3B);
+}
+
+/* 4-Column Grid */
+.arrivals-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 28px;
 }
 
-/* Individual product card */
-.product-card {
-  background: #ffffff;
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
-  overflow: hidden;
+/* Individual Card */
+.streetwear-card {
+  background-color: var(--color-ivory, #F4F1EB);
+  border: 2px solid var(--color-dark, #111111);
   display: flex;
   flex-direction: column;
-  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  transition: transform 0.2s ease;
 }
 
-.product-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.06);
-  border-color: #d1cbc0;
+.streetwear-card:hover {
+  transform: translateY(-4px);
 }
 
-/* Card image wrapper and links */
-.product-card-image-wrap {
+/* Media Block with Near-black Fallback */
+.streetwear-card-media {
   position: relative;
   width: 100%;
 }
 
-.product-card-link {
+.streetwear-media-link {
   display: block;
   text-decoration: none;
-  color: inherit;
 }
 
-.product-name-link {
-  text-decoration: none;
-  color: inherit;
-  transition: color 0.25s ease;
-}
-
-.product-name-link:hover {
-  color: var(--color-accent);
-}
-
-/* Soft colored placeholder image block */
-.product-placeholder {
-  position: relative;
-  height: 260px;
+.streetwear-img-wrap {
   width: 100%;
+  aspect-ratio: 1 / 1.15;
+  background-color: var(--color-dark, #111111);
+  border-bottom: 2px solid var(--color-dark, #111111);
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  border-bottom: 1px solid var(--color-border);
 }
 
-.product-fabric-tag {
+.streetwear-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.media-corner-badge {
   position: absolute;
-  top: 14px;
-  left: 14px;
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--color-muted);
-  font-size: 10px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  padding: 4px 8px;
-  border-radius: 12px;
-  border: 1px solid var(--color-border);
-  font-weight: 500;
+  bottom: 12px;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
 }
 
-/* Wishlist circular button */
-.wishlist-btn {
+.badge-index {
+  background: var(--color-dark, #111111);
+  color: var(--color-accent, #B8FF3B);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 3px 6px;
+  border: 1px solid var(--color-accent, #B8FF3B);
+}
+
+.badge-category {
+  color: var(--color-muted, #A5A5A0);
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* Wishlist Button */
+.streetwear-wishlist-btn {
   position: absolute;
   top: 12px;
   right: 12px;
   width: 36px;
   height: 36px;
-  border-radius: 50%;
-  border: 1px solid var(--color-border);
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--color-muted);
-  font-size: 18px;
-  cursor: pointer;
+  background: var(--color-ivory, #F4F1EB);
+  border: 1px solid var(--color-dark, #111111);
+  color: var(--color-dark, #111111);
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.25s ease;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   line-height: 1;
 }
 
-.wishlist-btn:hover {
-  background: #ffffff;
-  color: #b33939;
-  transform: scale(1.1);
-  border-color: #b33939;
+.streetwear-wishlist-btn:hover {
+  background: var(--color-dark, #111111);
+  color: var(--color-accent, #B8FF3B);
 }
 
-.wishlist-btn.wishlist-active {
-  color: #b33939;
-  background: #ffffff;
-  border-color: #b33939;
+.streetwear-wishlist-btn.active {
+  background: var(--color-dark, #111111);
+  color: var(--color-accent, #B8FF3B);
 }
 
-/* Minimal decorative center motif for placeholder */
-.product-swatch-silhouette {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px dashed rgba(26, 26, 26, 0.15);
-  transition: transform 0.35s ease;
-}
-
-.product-card:hover .product-swatch-silhouette {
-  transform: scale(1.08);
-}
-
-.silhouette-label {
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(26, 26, 26, 0.4);
-  font-weight: 600;
-}
-
-/* Product Card Information */
-.product-details {
+/* Card Details */
+.streetwear-card-info {
   padding: 20px 18px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
-.product-category {
-  font-size: 11px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--color-accent);
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-.product-name {
-  font-family: var(--font-heading);
-  font-size: 19px;
-  font-weight: 500;
-  color: var(--color-text);
+.info-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 8px;
-  line-height: 1.3;
 }
 
-.product-price {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--color-text);
+.card-category {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--color-muted, #A5A5A0);
+  text-transform: uppercase;
+}
+
+.card-color {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  color: #555555;
+  text-transform: uppercase;
+}
+
+.card-product-name {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  line-height: 1.15;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.card-title-link {
+  color: var(--color-dark, #111111);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.card-title-link:hover {
+  opacity: 0.8;
+}
+
+.card-price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
   margin-bottom: 18px;
+  margin-top: auto;
 }
 
-/* Add to Cart button */
-.cart-btn {
-  margin-top: auto;
+.card-price {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-dark, #111111);
+  letter-spacing: 0.5px;
+}
+
+.card-sizes {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-muted, #A5A5A0);
+  letter-spacing: 1px;
+}
+
+/* Add to Cart Button */
+.streetwear-cart-btn {
   width: 100%;
-  padding: 11px 16px;
-  background: transparent;
-  color: var(--color-text);
-  border: 1px solid var(--color-text);
-  border-radius: 2px;
+  padding: 13px 16px;
+  background-color: var(--color-dark, #111111);
+  color: var(--color-ivory, #F4F1EB);
+  border: 2px solid var(--color-dark, #111111);
   font-family: var(--font-body);
   font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 1.2px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.cart-btn:hover {
-  background: var(--color-text);
-  color: #ffffff;
+.streetwear-cart-btn:hover {
+  background-color: var(--color-accent, #B8FF3B);
+  color: var(--color-dark, #111111);
 }
 
-.cart-btn.cart-btn-added {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
-  color: #ffffff;
+.streetwear-cart-btn.added {
+  background-color: var(--color-accent, #B8FF3B);
+  color: var(--color-dark, #111111);
 }
 
-/* Responsive grid adjustments */
-@media (max-width: 1024px) {
-  .featured-grid {
+/* Responsive Grid */
+@media (max-width: 1200px) {
+  .arrivals-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
   }
 }
 
-@media (max-width: 580px) {
-  .featured-section {
-    padding: 60px 18px;
+@media (max-width: 640px) {
+  .arrivals-section {
+    padding: 60px 20px 50px;
   }
 
-  .featured-title {
+  .arrivals-title {
     font-size: 32px;
   }
 
-  .featured-grid {
+  .arrivals-grid {
     grid-template-columns: 1fr;
     gap: 20px;
-  }
-
-  .product-placeholder {
-    height: 240px;
   }
 }

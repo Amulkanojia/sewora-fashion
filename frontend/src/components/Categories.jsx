@@ -1,29 +1,35 @@
 // src/components/Categories.jsx
-// Three curated category cards: Women, Men, Accessories
+// Featured Collection section with sharp editorial cards and near-black media blocks
+import { Link } from 'react-router-dom'
 import './Categories.css'
 
-// Category items data with soft placeholder background tones
-const categoryList = [
+const collections = [
   {
     id: 'women',
-    title: 'Women',
-    subtitle: 'Flowing silks, organic knits & relaxed tailoring',
-    palette: '#efeae2',
-    itemCount: '28 Essentials',
+    categoryName: 'WOMEN',
+    dropCode: 'DROP 01 // W',
+    headline: 'ARCHITECTURAL FORM',
+    description: 'Heavyweight organic knits, boxy hoodies, and relaxed structured trousers.',
+    imageSrc: '/images/collection-women.jpg',
+    tag: '12 SILHOUETTES',
   },
   {
     id: 'men',
-    title: 'Men',
-    subtitle: 'Crisp hemp shirts, raw trousers & pure linen',
-    palette: '#e7e5de',
-    itemCount: '22 Essentials',
+    categoryName: 'MEN',
+    dropCode: 'DROP 01 // M',
+    headline: 'HEAVY FOUNDATIONS',
+    description: 'Raw hemp overshirts, 300 GSM tees, and wide-leg engineered utility pants.',
+    imageSrc: '/images/collection-men.jpg',
+    tag: '14 SILHOUETTES',
   },
   {
     id: 'accessories',
-    title: 'Accessories',
-    subtitle: 'Canvas carriers, reclaimed brass & mindful accents',
-    palette: '#e8e2d7',
-    itemCount: '16 Essentials',
+    categoryName: 'ACCESSORIES',
+    dropCode: 'DROP 01 // ACC',
+    headline: 'MODULAR GEAR',
+    description: 'Cordura sling carriers, reclaimed hardware buckles, and brutalist caps.',
+    imageSrc: '/images/collection-accessories.jpg',
+    tag: '08 OBJECTS',
   },
 ]
 
@@ -31,38 +37,58 @@ function Categories() {
   return (
     <section id="categories" className="categories-section">
       <div className="categories-container">
-        {/* Section title & intro */}
+        {/* Section Header */}
         <div className="categories-header">
-          <p className="categories-eyebrow">Mindful Selections</p>
-          <h2 className="categories-title">Shop by Category</h2>
+          <div className="categories-eyebrow-row">
+            <span className="streetwear-badge-lime">CURATED DROPS</span>
+            <span className="categories-eyebrow-text">AUTUMN / WINTER 2026</span>
+          </div>
+          <h2 className="categories-title">FEATURED COLLECTION</h2>
           <p className="categories-subtitle">
-            Explore versatile pieces designed for longevity, comfort, and sustainable everyday living.
+            Engineered modular systems constructed from certified organic textiles.
+            Purpose-built garments tailored for modern city movement.
           </p>
         </div>
 
-        {/* 3 Category Cards Grid */}
+        {/* 3-Column Collection Grid */}
         <div className="categories-grid">
-          {categoryList.map((category) => (
-            <div key={category.id} className="category-card">
-              {/* Soft colored placeholder block (replaces external images) */}
-              <div
-                className="category-placeholder"
-                style={{ backgroundColor: category.palette }}
-              >
-                <div className="placeholder-watermark">{category.title.toUpperCase()}</div>
-                <span className="category-count-badge">{category.itemCount}</span>
+          {collections.map((item) => (
+            <Link
+              key={item.id}
+              to="/products"
+              className="collection-card"
+              aria-label={`View ${item.categoryName} collection`}
+            >
+              {/* Media Block with /images fallback */}
+              <div className="collection-media-block">
+                <img
+                  src={item.imageSrc}
+                  alt={item.categoryName}
+                  className="collection-img"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none'
+                  }}
+                />
+                {/* Monolithic overlay details */}
+                <div className="collection-media-overlay" aria-hidden="true">
+                  <span className="collection-drop-badge">{item.dropCode}</span>
+                  <span className="collection-tag-pill">{item.tag}</span>
+                </div>
               </div>
 
-              {/* Category card details */}
-              <div className="category-info">
-                <h3 className="category-name">{category.title}</h3>
-                <p className="category-desc">{category.subtitle}</p>
-                <a href="#featured-products" className="category-link">
-                  Explore Collection
-                  <span className="category-arrow" aria-hidden="true">&rarr;</span>
-                </a>
+              {/* Card Meta Content */}
+              <div className="collection-content">
+                <div className="collection-meta-top">
+                  <span className="collection-category">{item.categoryName}</span>
+                  <span className="collection-arrow">&rarr;</span>
+                </div>
+                <h3 className="collection-headline">{item.headline}</h3>
+                <p className="collection-desc">{item.description}</p>
+                <div className="collection-cta">
+                  <span>DISCOVER DROP</span>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

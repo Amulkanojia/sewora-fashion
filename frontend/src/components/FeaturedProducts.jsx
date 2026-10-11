@@ -1,5 +1,5 @@
 // src/components/FeaturedProducts.jsx
-// Grid of 4 curated fashion items with wishlist, cart actions, and detail links
+// New Arrivals section featuring the first 4 products with sharp streetwear editorial aesthetics
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import products from '../data/products'
@@ -9,15 +9,14 @@ import './FeaturedProducts.css'
 function FeaturedProducts() {
   const { addToCart } = useCart()
 
-  // Use first 4 items from shared products data
-  const featuredProducts = products.slice(0, 4)
+  // Display only the first 4 products as New Arrivals
+  const newArrivals = products.slice(0, 4)
 
-  // Simple state to track wishlisted item IDs
+  // Track wishlist state
   const [wishlist, setWishlist] = useState([])
-  // State to provide temporary "Added ✓" feedback when adding to cart
+  // Cart addition feedback
   const [addedItems, setAddedItems] = useState({})
 
-  // Toggle wishlist state for a product
   const toggleWishlist = (productId) => {
     setWishlist((prev) =>
       prev.includes(productId)
@@ -26,7 +25,6 @@ function FeaturedProducts() {
     )
   }
 
-  // Handle Add to Cart using first available size on featured cards
   const handleAddToCart = (product) => {
     const defaultSize = product.sizes?.[0] || 'One Size'
     addToCart(product, defaultSize, 1)
@@ -34,79 +32,101 @@ function FeaturedProducts() {
     setAddedItems((prev) => ({ ...prev, [product.id]: true }))
     setTimeout(() => {
       setAddedItems((prev) => ({ ...prev, [product.id]: false }))
-    }, 1600)
+    }, 1500)
   }
 
   return (
-    <section id="featured-products" className="featured-section">
-      <div className="featured-container">
+    <section id="featured-products" className="arrivals-section">
+      <div className="arrivals-container">
         {/* Section Header */}
-        <div className="featured-header">
-          <p className="featured-eyebrow">Curated Capsule</p>
-          <h2 className="featured-title">Featured Pieces</h2>
-          <p className="featured-subtitle">
-            Mindfully designed garments tailored with earth-first materials, made to be worn and loved for years.
-          </p>
+        <div className="arrivals-header">
+          <div className="arrivals-eyebrow-row">
+            <span className="streetwear-badge-lime">LATEST RELEASE</span>
+            <span className="arrivals-eyebrow-text">LIMITED EDITION CAPSULE</span>
+          </div>
+          <div className="arrivals-title-row">
+            <h2 className="arrivals-title">NEW ARRIVALS</h2>
+            <Link to="/products" className="arrivals-view-all">
+              VIEW ALL SILHOUETTES &rarr;
+            </Link>
+          </div>
         </div>
 
-        {/* 4 Product Cards Grid */}
-        <div className="featured-grid">
-          {featuredProducts.map((product) => {
+        {/* 4-Item Streetwear Product Grid */}
+        <div className="arrivals-grid">
+          {newArrivals.map((product) => {
             const isWishlisted = wishlist.includes(product.id)
             const isAdded = addedItems[product.id]
 
             return (
-              <div key={product.id} className="product-card">
-                {/* Image area with link to product details */}
-                <div className="product-card-image-wrap">
+              <div key={product.id} className="streetwear-card">
+                {/* Media area with near-black fallback block */}
+                <div className="streetwear-card-media">
                   <Link
                     to={`/products/${product.id}`}
-                    className="product-card-link"
+                    className="streetwear-media-link"
                     aria-label={product.name}
                   >
-                    <div
-                      className="product-placeholder"
-                      style={{ backgroundColor: product.placeholderBg || '#ece6dd' }}
-                    >
-                      <span className="product-fabric-tag">{product.fabric || product.color}</span>
-
-                      <div className="product-swatch-silhouette">
-                        <span className="silhouette-label">{product.category}</span>
+                    <div className="streetwear-img-wrap">
+                      <img
+                        src={`/images/product-${product.id}.jpg`}
+                        alt={product.name}
+                        className="streetwear-img"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none'
+                        }}
+                      />
+                      {/* Monolithic technical badge inside the media block */}
+                      <div className="media-corner-badge" aria-hidden="true">
+                        <span className="badge-index">
+                          #{product.id < 10 ? `0${product.id}` : product.id}
+                        </span>
+                        <span className="badge-category">{product.category}</span>
                       </div>
                     </div>
                   </Link>
 
-                  {/* Wishlist Button in top corner */}
+                  {/* Wishlist Button */}
                   <button
                     type="button"
-                    className={`wishlist-btn ${isWishlisted ? 'wishlist-active' : ''}`}
+                    className={`streetwear-wishlist-btn ${isWishlisted ? 'active' : ''}`}
                     onClick={() => toggleWishlist(product.id)}
                     aria-label={`Wishlist ${product.name}`}
                     title={isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
                   >
-                    {isWishlisted ? '♥' : '♡'}
+                    {isWishlisted ? '★' : '☆'}
                   </button>
                 </div>
 
-                {/* Product Information */}
-                <div className="product-details">
-                  <span className="product-category">{product.category}</span>
-                  <h3 className="product-name">
-                    <Link to={`/products/${product.id}`} className="product-name-link">
+                {/* Product Metadata */}
+                <div className="streetwear-card-info">
+                  <div className="info-top-row">
+                    <span className="card-category">{product.category}</span>
+                    <span className="card-color">{product.color}</span>
+                  </div>
+
+                  <h3 className="card-product-name">
+                    <Link to={`/products/${product.id}`} className="card-title-link">
                       {product.name}
                     </Link>
                   </h3>
-                  <div className="product-price">
-                    ₹{product.price.toLocaleString('en-IN')}
+
+                  <div className="card-price-row">
+                    <span className="card-price">
+                      ₹{product.price.toLocaleString('en-IN')}
+                    </span>
+                    <span className="card-sizes">
+                      {Array.isArray(product.sizes) ? product.sizes.join(' · ') : ''}
+                    </span>
                   </div>
 
-                  {/* Add to Cart Button */}
+                  {/* Add to Cart Action */}
                   <button
                     type="button"
-                    className={`cart-btn ${isAdded ? 'cart-btn-added' : ''}`}
+                    className={`streetwear-cart-btn ${isAdded ? 'added' : ''}`}
                     onClick={() => handleAddToCart(product)}
                   >
-                    {isAdded ? 'Added ✓' : 'Add to Cart'}
+                    {isAdded ? 'ADDED TO CART ✓' : 'ADD TO CART'}
                   </button>
                 </div>
               </div>
