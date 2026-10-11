@@ -44,6 +44,11 @@ function Navbar() {
         {/* Desktop Right Actions */}
         <div className="navbar-actions">
           <Link to="/products" className="navbar-link">Wishlist</Link>
+          {user && (
+            <Link to="/orders" className="navbar-link">
+              Orders
+            </Link>
+          )}
           <Link to="/cart" className="navbar-link navbar-cart-link">
             Cart <span className="navbar-cart-count">({cartCount})</span>
           </Link>
@@ -87,6 +92,11 @@ function Navbar() {
             <Link to="/products" className="mobile-link" onClick={closeMenu}>Shop</Link>
             <a href="#campaign" className="mobile-link" onClick={closeMenu}>About</a>
             <Link to="/products" className="mobile-link" onClick={closeMenu}>Wishlist</Link>
+            {user && (
+              <Link to="/orders" className="mobile-link" onClick={closeMenu}>
+                Orders
+              </Link>
+            )}
             <Link to="/cart" className="mobile-link" onClick={closeMenu}>
               Cart ({cartCount})
             </Link>

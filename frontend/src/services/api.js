@@ -85,3 +85,72 @@ export async function loginUser(email, password) {
 
   return data
 }
+
+// Create a new order: POST /orders
+export async function createOrder(orderData, token) {
+  const response = await fetch(`${API_BASE_URL}/orders`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify(orderData),
+  })
+
+  if (response.status === 401 || response.status === 403) {
+    throw new Error('Please log in again')
+  }
+
+  const data = await response.json().catch(() => null)
+
+  if (!response.ok) {
+    const errorMessage = data?.message || 'Failed to place order'
+    throw new Error(errorMessage)
+  }
+
+  return data
+}
+
+// Get logged-in user's orders: GET /orders
+export async function getMyOrders(token) {
+  const response = await fetch(`${API_BASE_URL}/orders`, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+  })
+
+  if (response.status === 401 || response.status === 403) {
+    throw new Error('Please log in again')
+  }
+
+  const data = await response.json().catch(() => null)
+
+  if (!response.ok) {
+    const errorMessage = data?.message || 'Failed to fetch orders'
+    throw new Error(errorMessage)
+  }
+
+  return data
+}
+
+// Get single order by id: GET /orders/:id
+export async function getOrderById(id, token) {
+  const response = await fetch(`${API_BASE_URL}/orders/${id}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+  })
+
+  if (response.status === 401 || response.status === 403) {
+    throw new Error('Please log in again')
+  }
+
+  const data = await response.json().catch(() => null)
+
+  if (!response.ok) {
+    const errorMessage = data?.message || (response.status === 404 ? 'Order not found' : 'Failed to fetch order')
+    throw new Error(errorMessage)
+  }
+
+  return data
+}
