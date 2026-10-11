@@ -6,6 +6,7 @@ import { getProducts } from '../services/api'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
 import { useToast } from '../context/ToastContext'
+import { getProductImage } from '../utils/productImage'
 import './Products.css'
 
 const categories = ['All', 'Women', 'Men', 'Accessories']
@@ -215,7 +216,7 @@ function Products() {
                             style={{ backgroundColor: product.placeholderBg || '#ece6dd' }}
                           >
                             <img
-                              src={`/images/product-${product.id}.jpg`}
+                              src={getProductImage(product)}
                               alt={product.name}
                               className="product-card-img"
                               onError={(e) => {

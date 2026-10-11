@@ -53,7 +53,11 @@ export function CartProvider({ children }) {
         // Increase quantity of the existing matching item
         return prevItems.map((item, index) =>
           index === existingIndex
-            ? { ...item, quantity: item.quantity + addQuantity }
+            ? {
+                ...item,
+                quantity: item.quantity + addQuantity,
+                imageUrl: item.imageUrl || product.imageUrl || '',
+              }
             : item
         )
       }
@@ -69,6 +73,7 @@ export function CartProvider({ children }) {
           quantity: addQuantity,
           color: product.color,
           placeholderBg: product.placeholderBg,
+          imageUrl: product.imageUrl || '',
         },
       ]
     })

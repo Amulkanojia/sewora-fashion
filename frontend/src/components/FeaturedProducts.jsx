@@ -6,6 +6,7 @@ import { getProducts } from '../services/api'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
 import { useToast } from '../context/ToastContext'
+import { getProductImage } from '../utils/productImage'
 import './FeaturedProducts.css'
 
 function FeaturedProducts() {
@@ -123,7 +124,7 @@ function FeaturedProducts() {
                     >
                       <div className="streetwear-img-wrap">
                         <img
-                          src={`/images/product-${product.id}.jpg`}
+                          src={getProductImage(product)}
                           alt={product.name}
                           className="streetwear-img"
                           onError={(e) => {

@@ -6,6 +6,7 @@ import { getProductById } from '../services/api'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
 import { useToast } from '../context/ToastContext'
+import { getProductImage } from '../utils/productImage'
 import './ProductDetails.css'
 
 function ProductView({ product }) {
@@ -61,7 +62,7 @@ function ProductView({ product }) {
               style={{ backgroundColor: product.placeholderBg || '#ece6dd' }}
             >
               <img
-                src={`/images/product-${product.id}.jpg`}
+                src={getProductImage(product)}
                 alt={product.name}
                 className="product-large-img"
                 onError={(e) => {

@@ -2,6 +2,7 @@
 // Shopping cart page showing added items, quantity adjustments, line totals, and order summary
 import { Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
+import { getProductImage } from '../utils/productImage'
 import './Cart.css'
 
 function Cart() {
@@ -56,7 +57,7 @@ function Cart() {
                       aria-label={item.name}
                     >
                       <img
-                        src={`/images/product-${item.id}.jpg`}
+                        src={getProductImage(item)}
                         alt={item.name}
                         className="cart-item-img"
                         onError={(e) => {
