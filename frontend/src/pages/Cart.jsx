@@ -55,6 +55,14 @@ function Cart() {
                       style={{ backgroundColor: item.placeholderBg || '#ece6dd' }}
                       aria-label={item.name}
                     >
+                      <img
+                        src={`/images/product-${item.id}.jpg`}
+                        alt={item.name}
+                        className="cart-item-img"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none'
+                        }}
+                      />
                       <span className="cart-media-label">{item.size}</span>
                     </Link>
 

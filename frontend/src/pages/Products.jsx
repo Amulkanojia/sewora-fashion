@@ -214,6 +214,14 @@ function Products() {
                             className="product-placeholder"
                             style={{ backgroundColor: product.placeholderBg || '#ece6dd' }}
                           >
+                            <img
+                              src={`/images/product-${product.id}.jpg`}
+                              alt={product.name}
+                              className="product-card-img"
+                              onError={(e) => {
+                                e.currentTarget.style.display = 'none'
+                              }}
+                            />
                             <span className="product-fabric-tag">
                               {product.fabric || product.color}
                             </span>

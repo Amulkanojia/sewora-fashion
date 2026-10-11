@@ -60,6 +60,14 @@ function ProductView({ product }) {
               className="product-large-placeholder"
               style={{ backgroundColor: product.placeholderBg || '#ece6dd' }}
             >
+              <img
+                src={`/images/product-${product.id}.jpg`}
+                alt={product.name}
+                className="product-large-img"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none'
+                }}
+              />
               <span className="media-fabric-badge">
                 {product.fabric || product.color}
               </span>
