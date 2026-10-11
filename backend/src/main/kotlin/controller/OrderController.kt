@@ -9,7 +9,6 @@ import com.sewora.backend.repository.ProductRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.Authentication
-import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
@@ -22,7 +21,6 @@ class OrderController(
 
     // POST /api/orders -> validate, check stock, save order with DB prices, reduce stock
     @PostMapping
-    @Transactional
     fun createOrder(
         @RequestBody req: CreateOrderRequest,
         authentication: Authentication
@@ -104,8 +102,7 @@ class OrderController(
                 productName = product.name,
                 size = item.size,
                 quantity = item.quantity,
-                price = product.price,
-                order = order
+                price = product.price
             )
         }.toMutableList()
 
