@@ -1,5 +1,7 @@
 package com.sewora.backend.dto
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+
 // DTO for an item within a create order request
 data class OrderItemRequest(
     val productId: Long = 0,
@@ -16,4 +18,10 @@ data class CreateOrderRequest(
     val pincode: String = "",
     val paymentMethod: String = "",
     val items: List<OrderItemRequest> = emptyList()
+)
+
+// DTO for updating order status
+@JsonIgnoreProperties(ignoreUnknown = true)
+data class UpdateOrderStatusRequest(
+    val status: String = ""
 )

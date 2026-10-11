@@ -30,6 +30,10 @@ class SecurityConfig(private val jwtAuthFilter: JwtAuthFilter) {
                 it.requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/products/**").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/products/**").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasRole("ADMIN")
+                    .requestMatchers("/api/admin/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
             }
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
